@@ -1,0 +1,9 @@
+Package: tbb
+Version: 2020_U3
+Port-Version: 6
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 304f706262282d039850a40cbccb260dafb0082c1f6056de3e61f2b729c709bc
+Description: Intel's Threading Building Blocks.
+Type: Port
+Status: install ok half-installed

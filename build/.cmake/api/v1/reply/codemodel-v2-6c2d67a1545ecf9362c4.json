@@ -1,0 +1,104 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						2,
+						3
+					]
+				},
+				{
+					"build" : "integrity_tests",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "integrity_tests",
+					"targetIndexes" : 
+					[
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1
+					],
+					"name" : "GLViewer",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ImGuiWrapper::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ImGuiWrapper-Debug-f559139a223dcadd5c07.json",
+					"name" : "ImGuiWrapper",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "IntegrityTests::@84c41ca8a0b3f4cd76ce",
+					"jsonFile" : "target-IntegrityTests-Debug-769856f5c5128a513365.json",
+					"name" : "IntegrityTests",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Viewer::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Viewer-Debug-82807fe2ba9cb3d15b1e.json",
+					"name" : "Viewer",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "VolVis::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-VolVis-Debug-0832c09296e70514704a.json",
+					"name" : "VolVis",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/lucy/Dev/TU/DataVisualization/VolumeVisualization/build",
+		"source" : "/home/lucy/Dev/TU/DataVisualization/VolumeVisualization"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 0
+	}
+}

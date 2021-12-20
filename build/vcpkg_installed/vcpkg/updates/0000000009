@@ -1,0 +1,9 @@
+Package: opengl
+Version: 0.0
+Port-Version: 9
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 17914f58646d20bfdd2d1124d85c5cd0b190d842b2dfe956d7cac09910704c0f
+Description: Open Graphics Library (OpenGL)[3][4][5] is a cross-language, cross-platform application programming interface (API) for rendering 2D and 3D vector graphics.
+Type: Port
+Status: install ok installed

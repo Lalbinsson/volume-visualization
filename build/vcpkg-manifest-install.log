@@ -1,0 +1,311 @@
+A suitable version of cmake was not found (required v3.21.1). Downloading portable cmake v3.21.1...
+Downloading cmake...
+  https://github.com/Kitware/CMake/releases/download/v3.21.1/cmake-3.21.1-Linux-x86_64.tar.gz -> /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/downloads/cmake-3.21.1-linux-x86_64.tar.gz
+Extracting cmake...
+Detecting compiler hash for triplet x64-linux...
+A suitable version of ninja was not found (required v1.10.2). Downloading portable ninja v1.10.2...
+Downloading ninja...
+  https://github.com/ninja-build/ninja/releases/download/v1.10.2/ninja-linux.zip -> /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/downloads/ninja-linux-1.10.2.zip
+Extracting ninja...
+The following packages will be built and installed:
+    catch2[core]:x64-linux -> 2.13.7#1 -- /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/catch2/4df380019e5c3a0e450798db43d9ce70906b7aad
+    fmt[core]:x64-linux -> 8.0.1 -- /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/fmt/105214e3085a1404bca0fa89e7d80aa016e8cacb
+    glew[core]:x64-linux -> 2.2.0 -- /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/glew/3211ed09c36542372ab3f1f690a42e2edbb072bc
+    glfw3[core]:x64-linux -> 3.3.4 -- /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/glfw3/aa7325438c3156b62488a559218d12e7e860196c
+    glm[core]:x64-linux -> 0.9.9.8#1 -- /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/glm/4aafac80f39a72fadaf6a31afb961790678062de
+    imgui[core]:x64-linux -> 1.84.2 -- /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/imgui/c07b221daf49a22fc9e8e7571bb329485f618a7f
+    ms-gsl[core]:x64-linux -> 3.1.0#1 -- /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/ms-gsl/d51947d40835a72b1728c68ca8587e04e3f8e1e2
+    nativefiledialog[core]:x64-linux -> 2019-08-28#1 -- /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/nativefiledialog/d765a8f84ba49c18701f68b7471f1b93b7313ddc
+  * opengl[core]:x64-linux -> 0.0#9 -- /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/opengl/9fa8ed2a1fb625613a32ee95d2413dbc921860f7
+    stb[core]:x64-linux -> 2020-09-14#1 -- /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/stb/fa6d7e998f98f122efa37f456ffa498d546185b9
+    tbb[core]:x64-linux -> 2020_U3#6 -- /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/tbb/e168e03c2e5776bdee59accf5f643ae26b0ddd84
+  * vcpkg-cmake[core]:x64-linux -> 2021-07-30 -- /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/vcpkg-cmake/c6df7e0faeda9e783175746c7c440c9bc2bdb111
+  * vcpkg-cmake-config[core]:x64-linux -> 2021-05-22#1 -- /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/vcpkg-cmake-config/330cc51bc99c6b71ed5fb51901f6f838684015a5
+Additional packages (*) will be modified to complete this operation.
+Restored 0 packages from /home/lucy/.cache/vcpkg/archives in 15.56 us. Use --debug to see more details.
+Starting package 1/13: vcpkg-cmake-config:x64-linux
+Building package vcpkg-cmake-config[core]:x64-linux...
+-- Installing port from location: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/vcpkg-cmake-config/330cc51bc99c6b71ed5fb51901f6f838684015a5
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/vcpkg-cmake-config_x64-linux/share/vcpkg-cmake-config/vcpkg_cmake_config_fixup.cmake
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/vcpkg-cmake-config_x64-linux/share/vcpkg-cmake-config/vcpkg-port-config.cmake
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/vcpkg-cmake-config_x64-linux/share/vcpkg-cmake-config/copyright
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: /home/lucy/.cache/vcpkg/archives/98/9864da4bb61f42a1b00dcdbe4139ed804d4e2fe2fb09d03dff5c4c7a60065c83.zip
+Installing package vcpkg-cmake-config[core]:x64-linux...
+Elapsed time for package vcpkg-cmake-config:x64-linux: 17.16 ms
+Starting package 2/13: vcpkg-cmake:x64-linux
+Building package vcpkg-cmake[core]:x64-linux...
+-- Installing port from location: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/vcpkg-cmake/c6df7e0faeda9e783175746c7c440c9bc2bdb111
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/vcpkg-cmake_x64-linux/share/vcpkg-cmake/vcpkg_cmake_configure.cmake
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/vcpkg-cmake_x64-linux/share/vcpkg-cmake/vcpkg_cmake_build.cmake
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/vcpkg-cmake_x64-linux/share/vcpkg-cmake/vcpkg_cmake_install.cmake
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/vcpkg-cmake_x64-linux/share/vcpkg-cmake/vcpkg_cmake_get_vars.cmake
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/vcpkg-cmake_x64-linux/share/vcpkg-cmake/cmake_get_vars
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/vcpkg-cmake_x64-linux/share/vcpkg-cmake/cmake_get_vars/CMakeLists.txt
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/vcpkg-cmake_x64-linux/share/vcpkg-cmake/vcpkg-port-config.cmake
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/vcpkg-cmake_x64-linux/share/vcpkg-cmake/copyright
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: /home/lucy/.cache/vcpkg/archives/19/19d3f6132ee9bd4ee1d58ab6ba247a32a2390e78843a740f106bb975e7abd406.zip
+Installing package vcpkg-cmake[core]:x64-linux...
+Elapsed time for package vcpkg-cmake:x64-linux: 20.06 ms
+Starting package 3/13: catch2:x64-linux
+Building package catch2[core]:x64-linux...
+-- Installing port from location: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/catch2/4df380019e5c3a0e450798db43d9ce70906b7aad
+-- Downloading https://github.com/catchorg/Catch2/archive/v2.13.7.tar.gz -> catchorg-Catch2-v2.13.7.tar.gz...
+-- Extracting source /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/downloads/catchorg-Catch2-v2.13.7.tar.gz
+-- Applying patch fix-install-path.patch
+-- Using source at /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/catch2/src/v2.13.7-da4d0c36b6.clean
+-- Configuring x64-linux-dbg
+-- Configuring x64-linux-rel
+-- Building x64-linux-dbg
+-- Building x64-linux-rel
+-- Fixing pkgconfig file: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/catch2_x64-linux/lib/pkgconfig/catch2.pc
+-- Fixing pkgconfig file: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/catch2_x64-linux/debug/lib/pkgconfig/catch2.pc
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/catch2_x64-linux/share/catch2/copyright
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: /home/lucy/.cache/vcpkg/archives/98/9828420daf2d4c42e069876e8107bcc99d8f4b1116d43a5b6579df3948b0e756.zip
+Installing package catch2[core]:x64-linux...
+Elapsed time for package catch2:x64-linux: 32.47 s
+Starting package 4/13: fmt:x64-linux
+Building package fmt[core]:x64-linux...
+-- Installing port from location: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/fmt/105214e3085a1404bca0fa89e7d80aa016e8cacb
+-- Downloading https://github.com/fmtlib/fmt/archive/d141cdbeb0fb422a3fb7173b285fd38e0d1772dc.tar.gz -> fmtlib-fmt-d141cdbeb0fb422a3fb7173b285fd38e0d1772dc.tar.gz...
+-- Extracting source /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/downloads/fmtlib-fmt-d141cdbeb0fb422a3fb7173b285fd38e0d1772dc.tar.gz
+-- Applying patch fix-write-batch.patch
+-- Using source at /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/fmt/src/8e0d1772dc-2f06dbbb1c.clean
+-- Configuring x64-linux-dbg
+-- Configuring x64-linux-rel
+-- Building x64-linux-dbg
+-- Building x64-linux-rel
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/fmt_x64-linux/share/fmt/copyright
+-- Fixing pkgconfig file: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/fmt_x64-linux/lib/pkgconfig/fmt.pc
+-- Fixing pkgconfig file: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/fmt_x64-linux/debug/lib/pkgconfig/fmt.pc
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/fmt_x64-linux/share/fmt/usage
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: /home/lucy/.cache/vcpkg/archives/e6/e6ff30f4020ebad9779d9a41c47d89bde4736b3553d0c5fbd2d4e7b95dc52557.zip
+Installing package fmt[core]:x64-linux...
+Elapsed time for package fmt:x64-linux: 8.222 s
+Starting package 5/13: opengl:x64-linux
+Building package opengl[core]:x64-linux...
+-- Installing port from location: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/opengl/9fa8ed2a1fb625613a32ee95d2413dbc921860f7
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: /home/lucy/.cache/vcpkg/archives/17/17914f58646d20bfdd2d1124d85c5cd0b190d842b2dfe956d7cac09910704c0f.zip
+Installing package opengl[core]:x64-linux...
+Elapsed time for package opengl:x64-linux: 14.78 ms
+Starting package 6/13: glew:x64-linux
+Building package glew[core]:x64-linux...
+-- Installing port from location: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/glew/3211ed09c36542372ab3f1f690a42e2edbb072bc
+CMake Warning at buildtrees/versioning_/versions/glew/3211ed09c36542372ab3f1f690a42e2edbb072bc/portfile.cmake:2 (message):
+  glew requires the following libraries from the system package manager:
+
+      libxmu-dev
+      libxi-dev
+      libgl-dev
+
+  
+
+  These can be installed on Ubuntu systems via apt-get install libxmu-dev
+  libxi-dev libgl-dev.
+Call Stack (most recent call first):
+  scripts/ports.cmake:142 (include)
+
+
+-- Downloading https://github.com/nigels-com/glew/releases/download/glew-2.2.0/glew-2.2.0.tgz -> glew-2.2.0.tgz...
+-- Extracting source /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/downloads/glew-2.2.0.tgz
+-- Applying patch fix-LNK2019.patch
+-- Using source at /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/glew/src/glew-7f0b9182fc.clean
+-- Configuring x64-linux-dbg
+-- Configuring x64-linux-rel
+-- Building x64-linux-dbg
+-- Building x64-linux-rel
+-- Fixing pkgconfig file: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/glew_x64-linux/lib/pkgconfig/glew.pc
+-- Fixing pkgconfig file: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/glew_x64-linux/debug/lib/pkgconfig/glew.pc
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/glew_x64-linux/share/glew/vcpkg-cmake-wrapper.cmake
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/glew_x64-linux/share/glew/copyright
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: /home/lucy/.cache/vcpkg/archives/1b/1b8b27c9232eba70e151acfb4723f371e7f168033407c33b17f8afdb847d56ea.zip
+Installing package glew[core]:x64-linux...
+Elapsed time for package glew:x64-linux: 10.06 s
+Starting package 7/13: glfw3:x64-linux
+Building package glfw3[core]:x64-linux...
+-- Installing port from location: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/glfw3/aa7325438c3156b62488a559218d12e7e860196c
+-- Downloading https://github.com/glfw/glfw/archive/814b7929c5add4b0541ccad26fb81f28b71dc4d8.tar.gz -> glfw-glfw-814b7929c5add4b0541ccad26fb81f28b71dc4d8.tar.gz...
+-- Extracting source /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/downloads/glfw-glfw-814b7929c5add4b0541ccad26fb81f28b71dc4d8.tar.gz
+-- Using source at /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/glfw3/src/28b71dc4d8-8322ed2fb8.clean
+GLFW3 currently requires the following libraries from the system package manager:
+    xinerama
+    xcursor
+    xorg
+    libglu1-mesa
+
+These can be installed on Ubuntu systems via sudo apt install libxinerama-dev libxcursor-dev xorg-dev libglu1-mesa-dev
+-- Configuring x64-linux-dbg
+-- Configuring x64-linux-rel
+-- Building x64-linux-dbg
+-- Building x64-linux-rel
+-- Fixing pkgconfig file: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/glfw3_x64-linux/lib/pkgconfig/glfw3.pc
+-- Fixing pkgconfig file: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/glfw3_x64-linux/debug/lib/pkgconfig/glfw3.pc
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/glfw3_x64-linux/share/glfw3/copyright
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: /home/lucy/.cache/vcpkg/archives/96/965a8dc3bad76f15e58855b6d451647f0cdc66a44c1c3ccbfc88862e8e8cf0e2.zip
+Installing package glfw3[core]:x64-linux...
+Elapsed time for package glfw3:x64-linux: 4.41 s
+Starting package 8/13: glm:x64-linux
+Building package glm[core]:x64-linux...
+-- Installing port from location: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/glm/4aafac80f39a72fadaf6a31afb961790678062de
+-- Downloading https://github.com/g-truc/glm/archive/bf71a834948186f4097caa076cd2663c69a10e1e.tar.gz -> g-truc-glm-bf71a834948186f4097caa076cd2663c69a10e1e.tar.gz...
+-- Extracting source /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/downloads/g-truc-glm-bf71a834948186f4097caa076cd2663c69a10e1e.tar.gz
+-- Using source at /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/glm/src/3c69a10e1e-d8f71d3bef.clean
+-- Configuring x64-linux-dbg
+-- Configuring x64-linux-rel
+-- Building x64-linux-dbg
+-- Building x64-linux-rel
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/glm_x64-linux/share/glm/copyright
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: /home/lucy/.cache/vcpkg/archives/ad/ad3c33280e4ad23f19104955101722a42b425548e6e33af20c9d3e4fb5c6627c.zip
+Installing package glm[core]:x64-linux...
+Elapsed time for package glm:x64-linux: 1.618 s
+Starting package 9/13: imgui:x64-linux
+Building package imgui[core]:x64-linux...
+-- Installing port from location: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/imgui/c07b221daf49a22fc9e8e7571bb329485f618a7f
+-- Downloading https://github.com/ocornut/imgui/archive/v1.84.2.tar.gz -> ocornut-imgui-v1.84.2.tar.gz...
+-- Extracting source /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/downloads/ocornut-imgui-v1.84.2.tar.gz
+-- Using source at /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/imgui/src/v1.84.2-fd28f2b826.clean
+-- Configuring x64-linux-dbg
+-- Configuring x64-linux-rel
+-- Building x64-linux-dbg
+-- Building x64-linux-rel
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/imgui_x64-linux/share/imgui/copyright
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: /home/lucy/.cache/vcpkg/archives/27/279a2f34be30676f107ce0035c54db6af07453232d84b8fa042a3cdc7b56d8fb.zip
+Installing package imgui[core]:x64-linux...
+Elapsed time for package imgui:x64-linux: 10.98 s
+Starting package 10/13: ms-gsl:x64-linux
+Building package ms-gsl[core]:x64-linux...
+-- Installing port from location: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/ms-gsl/d51947d40835a72b1728c68ca8587e04e3f8e1e2
+-- Downloading https://github.com/Microsoft/GSL/archive/0f6dbc9e2915ef5c16830f3fa3565738de2a9230.tar.gz -> Microsoft-GSL-0f6dbc9e2915ef5c16830f3fa3565738de2a9230.tar.gz...
+-- Extracting source /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/downloads/Microsoft-GSL-0f6dbc9e2915ef5c16830f3fa3565738de2a9230.tar.gz
+-- Using source at /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/ms-gsl/src/38de2a9230-f0e3aae458.clean
+-- Configuring x64-linux-dbg
+-- Configuring x64-linux-rel
+-- Building x64-linux-dbg
+-- Building x64-linux-rel
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/ms-gsl_x64-linux/share/ms-gsl/copyright
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: /home/lucy/.cache/vcpkg/archives/88/88d85e9ee74815e08c733de9637ff7de8bab3dda6be41e5a9d98b7f06766dfbc.zip
+Installing package ms-gsl[core]:x64-linux...
+Elapsed time for package ms-gsl:x64-linux: 1.007 s
+Starting package 11/13: nativefiledialog:x64-linux
+Building package nativefiledialog[core]:x64-linux...
+-- Installing port from location: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/nativefiledialog/d765a8f84ba49c18701f68b7471f1b93b7313ddc
+-- Downloading https://github.com/mlabbe/nativefiledialog/archive/ceb75f7abf30736aa8ee4800cde0d444c798f8b9.tar.gz -> mlabbe-nativefiledialog-ceb75f7abf30736aa8ee4800cde0d444c798f8b9.tar.gz...
+-- Extracting source /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/downloads/mlabbe-nativefiledialog-ceb75f7abf30736aa8ee4800cde0d444c798f8b9.tar.gz
+-- Using source at /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/nativefiledialog/src/44c798f8b9-0d908eb5b1.clean
+-- Configuring x64-linux-dbg
+-- Configuring x64-linux-rel
+-- Building x64-linux-dbg
+-- Building x64-linux-rel
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: /home/lucy/.cache/vcpkg/archives/c1/c173ec36aebdfea3dc08403fb2311ee034e634a02d7aafc36396e7c3594ccaf9.zip
+Installing package nativefiledialog[core]:x64-linux...
+Elapsed time for package nativefiledialog:x64-linux: 1.035 s
+Starting package 12/13: stb:x64-linux
+Building package stb[core]:x64-linux...
+-- Installing port from location: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/stb/fa6d7e998f98f122efa37f456ffa498d546185b9
+-- Downloading https://github.com/nothings/stb/archive/b42009b3b9d4ca35bc703f5310eedc74f584be58.tar.gz -> nothings-stb-b42009b3b9d4ca35bc703f5310eedc74f584be58.tar.gz...
+-- Extracting source /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/downloads/nothings-stb-b42009b3b9d4ca35bc703f5310eedc74f584be58.tar.gz
+-- Using source at /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/stb/src/74f584be58-c6ba25f408.clean
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/stb_x64-linux/share/stb/copyright
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/stb_x64-linux/share/stb/FindStb.cmake
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/stb_x64-linux/share/stb/vcpkg-cmake-wrapper.cmake
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: /home/lucy/.cache/vcpkg/archives/a6/a6d92521f5988f32b8d112c188efeb3c5e92be5c530ad0973eb2ed5a0a47cbf2.zip
+Installing package stb[core]:x64-linux...
+Elapsed time for package stb:x64-linux: 700.2 ms
+Starting package 13/13: tbb:x64-linux
+Building package tbb[core]:x64-linux...
+-- Installing port from location: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/versioning_/versions/tbb/e168e03c2e5776bdee59accf5f643ae26b0ddd84
+-- Downloading https://github.com/oneapi-src/oneTBB/archive/eca91f16d7490a8abfdee652dadf457ec820cc37.tar.gz -> oneapi-src-oneTBB-eca91f16d7490a8abfdee652dadf457ec820cc37.tar.gz...
+-- Extracting source /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/downloads/oneapi-src-oneTBB-eca91f16d7490a8abfdee652dadf457ec820cc37.tar.gz
+-- Applying patch fix-static-build.patch
+-- Applying patch terminate-when-buildtool-notfound.patch
+-- Using source at /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/buildtrees/tbb/src/7ec820cc37-30e75ff0be.clean
+-- Configuring x64-linux-dbg
+-- Configuring x64-linux-rel
+-- Building x64-linux-dbg
+-- Building x64-linux-rel
+-- Installing: /home/lucy/Dev/TU/DataVisualization/VolumeVisualization/vcpkg/packages/tbb_x64-linux/share/tbb/copyright
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: /home/lucy/.cache/vcpkg/archives/30/304f706262282d039850a40cbccb260dafb0082c1f6056de3e61f2b729c709bc.zip
+Installing package tbb[core]:x64-linux...
+Elapsed time for package tbb:x64-linux: 26.9 s
+
+Total elapsed time: 1.853 min
+
+The package catch2 provides CMake targets:
+
+    find_package(Catch2 CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE Catch2::Catch2 Catch2::Catch2WithMain)
+
+The package fmt provides CMake targets:
+
+    find_package(fmt CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE fmt::fmt)
+
+    # Or use the header-only version
+    find_package(fmt CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE fmt::fmt-header-only)
+
+The package glew is compatible with built-in CMake targets:
+
+    find_package(GLEW REQUIRED)
+    target_link_libraries(main PRIVATE GLEW::GLEW)
+
+The package glfw3 provides CMake targets:
+
+    find_package(glfw3 CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE glfw)
+
+The package glm provides CMake targets:
+
+    find_package(glm CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE glm::glm)
+
+The package imgui provides CMake targets:
+
+    find_package(imgui CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE imgui::imgui)
+
+The package ms-gsl provides CMake targets:
+
+    find_package(Microsoft.GSL CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE Microsoft.GSL::GSL)
+
+The package nativefiledialog provides CMake targets:
+
+    find_package(unofficial-nativefiledialog CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE unofficial::nativefiledialog::nfd)
+
+The package stb is header only and can be used from CMake via:
+
+    find_path(STB_INCLUDE_DIRS "stb.h")
+    target_include_directories(main PRIVATE ${STB_INCLUDE_DIRS})
+
+The package tbb provides CMake targets:
+
+    find_package(TBB CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE TBB::tbb)
+
