@@ -121,22 +121,67 @@ float Volume::getSampleNearestNeighbourInterpolation(const glm::vec3& coord) con
 // This function returns the trilinear interpolated value at the continuous 3D position given by coord.
 float Volume::getSampleTriLinearInterpolation(const glm::vec3& coord) const
 {
-    return 0.0f;
-}
+    // check if the coordinate is within volume boundaries
+    if (glm::any(glm::lessThan(coord, glm::vec3(0))) || glm::any(glm::greaterThanEqual(coord, glm::vec3(m_dim))))
+        return 0.0f;
 
+    glm::vec2 q(coord.x, coord.y);
+    float r1 = biLinearInterpolate(q, floor(coord.z)); // BiLinearInterpolate
+    float r2 = biLinearInterpolate(q, ceil(coord.z));
+    float factor = coord.z - floor(coord.z);
+    return linearInterpolate(r1,r2,factor); // a float-value
+}
+    
 // This function linearly interpolates the value at X using incoming values g0 and g1 given a factor (equal to the positon of x in 1D)
 //
 // g0--X--------g1
 //   factor
 float Volume::linearInterpolate(float g0, float g1, float factor)
 {
-    return 0.0f;
+    return g0 + factor * (g1 - g0);
 }
 
 // This function bi-linearly interpolates the value at the given continuous 2D XY coordinate for a fixed integer z coordinate.
 float Volume::biLinearInterpolate(const glm::vec2& xyCoord, int z) const
 {
-    return 0.0f;
+    float x = xyCoord.x;
+    float y = xyCoord.y;
+    float x0 = (floor(xyCoord.x));
+    float x1 = ceil(xyCoord.x);
+
+    float factor0 = x - x0;
+    float g0 = getVoxel(x0, floor(xyCoord.y), z);
+    float g1 = getVoxel(x1, floor(xyCoord.y), z);
+
+    float g2 = getVoxel(x0, ceil(xyCoord.y), z);
+    float g3 = getVoxel(x1, ceil(xyCoord.y), z);
+
+    float r0 = linearInterpolate(g0, g1, factor0);
+    float r1 = linearInterpolate(g2, g3, factor0);
+
+    float y0 = floor(xyCoord.y);
+    float factor1 = y - y0;
+
+    float r2 = linearInterpolate(r0, r1, factor1);
+
+    return r2;
+
+    /*
+    float factor = xyCoord.x / 128; // Factor should be the position of the coord in 1D. 
+                                    //Since the distance between neighbouring voxels is 1 in all directions, dividing by 1 we should get the factor
+    float x2 = (ceil(xyCoord.x));
+    float x = (xyCoord.x);
+    float x1 = (floor(xyCoord.x));
+
+    float q00 = getVoxel(x1, xyCoord.y, z);
+    float q01 = getVoxel(x2, xyCoord.y, z);
+    float r1 = linearInterpolate(q00, q01, factor);
+    float q10 = getVoxel(x, ceil(xyCoord.y), z);
+    float q11 = getVoxel(x2, ceil(xyCoord.y), z);
+    float r2 = linearInterpolate(q10, q11, factor);
+    float r3 = linearInterpolate(r1, r2, factor);
+    return r3;
+    */
 }
 
 
