@@ -9,6 +9,9 @@
 #include <tbb/blocked_range2d.h>
 #include <tbb/parallel_for.h>
 #include <tuple>
+#include <iostream>
+#include <glm/glm.hpp>
+#include <glm/gtx/io.hpp>
 
 namespace render {
 
@@ -102,6 +105,7 @@ void Renderer::render()
             glm::vec4 color {};
             switch (m_config.renderMode) {
             case RenderMode::RenderSlicer: {
+             //   std::cout << "testing render slice" << std::endl;
                 color = traceRaySlice(ray, volumeCenter, planeNormal);
                 break;
             }
@@ -175,8 +179,31 @@ glm::vec4 Renderer::traceRayMIP(const Ray& ray, float sampleStep) const
 // Use the bisectionAccuracy function (to be implemented) to get a more precise isosurface location between two steps.
 glm::vec4 Renderer::traceRayISO(const Ray& ray, float sampleStep) const
 {
+
+    float isoVal = m_config.isoValue;
     static constexpr glm::vec3 isoColor { 0.8f, 0.8f, 0.2f };
-    return glm::vec4(isoColor, 1.0f);
+    glm::vec3 samplePos = ray.origin + ray.tmin * ray.direction;
+    // use bisectionArray to get more precise increment?
+    const glm::vec3 increment = sampleStep * ray.direction;
+    float val = 0.0f;
+
+    float shading = m_config.volumeShading ;
+
+    //std::cout << shading << std::endl;
+
+    for (float t = ray.tmin; t <= ray.tmax; t += sampleStep, samplePos += increment) {
+        val = m_pVolume->getSampleInterpolate(samplePos);
+        if (val > isoVal) {
+            if (shading==0){
+                return glm::vec4(isoColor, 1.0f);
+            } else if (shading==1){
+                volume::GradientVoxel grad = m_pGradientVolume->getGradient(samplePos[0], samplePos[1], samplePos[2]);
+                const glm::vec3 shade = computePhongShading(glm::vec4(isoColor, 1.0f), grad, m_pCamera->position(), samplePos);
+                //std::cout << shade << std::endl;
+                return glm::vec4(shade, 1.0f);
+            }
+        }
+    }
 }
 
 // ======= TODO: IMPLEMENT ========
@@ -197,7 +224,23 @@ float Renderer::bisectionAccuracy(const Ray& ray, float t0, float t1, float isoV
 // You are free to choose any specular power that you'd like.
 glm::vec3 Renderer::computePhongShading(const glm::vec3& color, const volume::GradientVoxel& gradient, const glm::vec3& L, const glm::vec3& V)
 {
-    return glm::vec3(0.0f);
+
+    //phong weights
+    float ka = 0.1;
+    float kd = 0.7; 
+    float ks = 0.2; 
+    int inf = 100;
+    int alpha = 1;
+
+    
+
+
+    float ambient = ka * glm::dot(L, color); //vector multiplication (?)
+    float diffuse = kd * glm::dot(L, color); // * vinkeln mellan gradient och L;
+    float specular = ks * glm::dot(L, color); // * gradient^alpha; //kvadrat
+
+    //ambient+diffuse+speculat
+    return glm::vec3(ambient + diffuse + specular);
 }
 
 // ======= TODO: IMPLEMENT ========
