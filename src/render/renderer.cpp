@@ -179,7 +179,10 @@ glm::vec4 Renderer::traceRayMIP(const Ray& ray, float sampleStep) const
 // Use the bisectionAccuracy function (to be implemented) to get a more precise isosurface location between two steps.
 glm::vec4 Renderer::traceRayISO(const Ray& ray, float sampleStep) const
 {
-
+    static constexpr glm::vec3 isoColor { 0.8f, 0.8f, 0.2f };
+    return glm::vec4(isoColor, 1.0f);
+    
+    
     float isoVal = m_config.isoValue;
     static constexpr glm::vec3 isoColor { 0.8f, 0.8f, 0.2f };
     glm::vec3 samplePos = ray.origin + ray.tmin * ray.direction;
@@ -191,19 +194,21 @@ glm::vec4 Renderer::traceRayISO(const Ray& ray, float sampleStep) const
 
     //std::cout << shading << std::endl;
 
+    
     for (float t = ray.tmin; t <= ray.tmax; t += sampleStep, samplePos += increment) {
         val = m_pVolume->getSampleInterpolate(samplePos);
         if (val > isoVal) {
             if (shading==0){
                 return glm::vec4(isoColor, 1.0f);
             } else if (shading==1){
-                volume::GradientVoxel grad = m_pGradientVolume->getGradient(samplePos[0], samplePos[1], samplePos[2]);
-                const glm::vec3 shade = computePhongShading(glm::vec4(isoColor, 1.0f), grad, m_pCamera->position(), samplePos);
+                volume::GradientVoxel grad = m_pGradientVolume->getGradient(samplePos.x, samplePos.y, samplePos.z);
+                const glm::vec3 shade = computePhongShading(glm::vec4(isoColor, 1.0f), grad, m_pCamera->position(), m_pCamera->position());
                 //std::cout << shade << std::endl;
-                return glm::vec4(shade, 1.0f);
+                return glm::vec4(glm::vec3(shade) / m_pVolume->maximum(), 1.0f);
             }
         }
     }
+    
 }
 
 // ======= TODO: IMPLEMENT ========
@@ -232,15 +237,25 @@ glm::vec3 Renderer::computePhongShading(const glm::vec3& color, const volume::Gr
     int inf = 100;
     int alpha = 1;
 
+    const glm::vec3 normalized_inverse_light = glm::normalize(-L); // We need to invert the vector
+    const glm::vec3 normalized_light = glm::normalize(L);
+    const glm::vec3 normalized_surf = glm::normalize(gradient.dir); // What is the surface normal?
+    const glm::vec3 reflected_light = 2 * glm::dot(L, normalized_surf) * normalized_surf - normalized_light;
+    const glm::vec3 normalized_reflected_light = glm::normalize(reflected_light);
+    const glm::vec3 normalized_view = glm::normalize(-V);
+
+    float theta = glm::dot(normalized_inverse_light, normalized_surf);
+    float fi = glm::dot(normalized_reflected_light, normalized_view);
+
+    const glm::vec3 ambient = ka * glm::vec3(L.x * color.x, L.y * color.y, L.z * color.z); //vector multiplication (?)
+    const glm::vec3 diffuse = kd * glm::vec3(L.x * color.x, L.y * color.y, L.z * color.z) * theta; // * vinkeln mellan gradient och L;
+    const glm::vec3 specular = ks * (float)pow(fi, inf) * glm::vec3(L.x * color.x, L.y * color.y, L.z * color.z); // * gradient^alpha; //kvadrat
+
+    //std::cout << "HEJ" << std::endl;
+    //std::cout << ambient << std::endl;
     
-
-
-    float ambient = ka * glm::dot(L, color); //vector multiplication (?)
-    float diffuse = kd * glm::dot(L, color); // * vinkeln mellan gradient och L;
-    float specular = ks * glm::dot(L, color); // * gradient^alpha; //kvadrat
-
     //ambient+diffuse+speculat
-    return glm::vec3(ambient + diffuse + specular);
+    return ambient + diffuse + specular;
 }
 
 // ======= TODO: IMPLEMENT ========
