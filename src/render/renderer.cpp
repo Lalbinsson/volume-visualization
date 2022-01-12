@@ -179,8 +179,13 @@ glm::vec4 Renderer::traceRayMIP(const Ray& ray, float sampleStep) const
 // Use the bisectionAccuracy function (to be implemented) to get a more precise isosurface location between two steps.
 glm::vec4 Renderer::traceRayISO(const Ray& ray, float sampleStep) const
 {
+<<<<<<< HEAD
     //static constexpr glm::vec3 isoColor { 0.8f, 0.8f, 0.2f };
     //return glm::vec4(isoColor, 1.0f);
+=======
+ //   static constexpr glm::vec3 isoColor { 0.8f, 0.8f, 0.2f };
+ //   return glm::vec4(isoColor, 1.0f);
+>>>>>>> iso-surface
     
     
     float isoVal = m_config.isoValue;
@@ -193,7 +198,13 @@ glm::vec4 Renderer::traceRayISO(const Ray& ray, float sampleStep) const
  
     for (float t = ray.tmin; t <= ray.tmax; t += sampleStep, samplePos += increment) {
         val = m_pVolume->getSampleInterpolate(samplePos);
+<<<<<<< HEAD
         if (val >= isoVal) {
+=======
+        if (val > isoVal) {
+            float tBisect = bisectionAccuracy(ray, t-sampleStep, t, isoVal);
+            samplePos = ray.origin + tBisect * ray.direction;
+>>>>>>> iso-surface
             if (shading==0){
                 result = glm::vec4(isoColor, 1.0f);
             } else if (shading==1){
@@ -215,7 +226,25 @@ glm::vec4 Renderer::traceRayISO(const Ray& ray, float sampleStep) const
 // iterations such that it does not get stuck in degerate cases.
 float Renderer::bisectionAccuracy(const Ray& ray, float t0, float t1, float isoValue) const
 {
-    return 0.0f;
+    float tmid = t0+((t1-t0)/2); 
+    glm::vec3 samplePos = ray.origin + tmid * ray.direction; //samplePos mitten av t0 och t1
+    float val = m_pVolume->getSampleInterpolate(samplePos); //val vid punkten mitt emellan t0 och t1
+    const int maxIter = 50;
+    int iter = 0;
+
+    while ((abs(isoValue-val) > 0.01) && (iter < maxIter)) { //om värdet vid tmid fortfarande är större, med 0.01 differens
+        tmid = t0+((t1-t0)/2); //tmid är mitt emellan t0 och tmid (halveras varje iteration)
+        glm::vec3 newSamplePos = ray.origin + tmid * ray.direction;
+        val = m_pVolume->getSampleInterpolate(newSamplePos); 
+        if (val < isoValue) { //beroende på om val är större eller mindre så flyttas t0 och t1 närmare eller längre ifrån upper bound t1
+            t0 = tmid;
+        } else if(val >= isoValue) {
+            t1 = tmid;
+        }
+        iter = iter+1;
+    }
+
+    return tmid;
 }
 
 // ======= TODO: IMPLEMENT ========
