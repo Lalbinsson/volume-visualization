@@ -179,15 +179,10 @@ glm::vec4 Renderer::traceRayMIP(const Ray& ray, float sampleStep) const
 // Use the bisectionAccuracy function (to be implemented) to get a more precise isosurface location between two steps.
 glm::vec4 Renderer::traceRayISO(const Ray& ray, float sampleStep) const
 {
-<<<<<<< HEAD
-    //static constexpr glm::vec3 isoColor { 0.8f, 0.8f, 0.2f };
-    //return glm::vec4(isoColor, 1.0f);
-=======
+
  //   static constexpr glm::vec3 isoColor { 0.8f, 0.8f, 0.2f };
  //   return glm::vec4(isoColor, 1.0f);
->>>>>>> iso-surface
-    
-    
+
     float isoVal = m_config.isoValue;
     static constexpr glm::vec3 isoColor { 0.8f, 0.8f, 0.2f };
     glm::vec3 samplePos = ray.origin + ray.tmin * ray.direction;
@@ -198,24 +193,22 @@ glm::vec4 Renderer::traceRayISO(const Ray& ray, float sampleStep) const
  
     for (float t = ray.tmin; t <= ray.tmax; t += sampleStep, samplePos += increment) {
         val = m_pVolume->getSampleInterpolate(samplePos);
-<<<<<<< HEAD
-        if (val >= isoVal) {
-=======
         if (val > isoVal) {
             float tBisect = bisectionAccuracy(ray, t-sampleStep, t, isoVal);
             samplePos = ray.origin + tBisect * ray.direction;
->>>>>>> iso-surface
             if (shading==0){
-                result = glm::vec4(isoColor, 1.0f);
+                return glm::vec4(isoColor, 1.0f);
             } else if (shading==1){
                 volume::GradientVoxel grad = m_pGradientVolume->getGradientInterpolate(glm::vec3 { samplePos[0], samplePos[1], samplePos[2] });
-                const glm::vec3 shade = computePhongShading(isoColor, grad, m_pCamera->position(), m_pCamera->position());
+                glm::vec3 lightVector { samplePos - m_pCamera->position() };
+                lightVector = glm::normalize(lightVector);
+                const glm::vec3 shade = computePhongShading(isoColor, grad, lightVector, -lightVector);
                 //std::cout << shade << std::endl;
-                result = glm::vec4(shade, 1.0f);
+                return glm::vec4(shade, 1.0f);
             }
         }
     }
-    return result;
+    return glm::vec4(0);
     
     
 }
@@ -282,7 +275,7 @@ glm::vec3 Renderer::computePhongShading(const glm::vec3& color, const volume::Gr
     //std::cout << ambient << std::endl;
     
     //ambient+diffuse+speculat
-    return ambient + diffuse; //+ specular;
+    return ambient + diffuse + specular;
 }
 
 // ======= TODO: IMPLEMENT ========
@@ -293,11 +286,8 @@ glm::vec4 Renderer::traceRayComposite(const Ray& ray, float sampleStep) const
     glm::vec4 result(0.0f);
     float val = 0.0f;
     glm::vec3 ci_prime(0.0f);
-    glm::vec3 old_c_prime(0.8f, 0.8f,0.2f);
     float ai_prime = 0.0f;
     
-
-
     // Incrementing samplePos directly instead of recomputing it each frame gives a measureable speed-up.
     glm::vec3 samplePos = ray.origin + ray.tmin * ray.direction;
     const glm::vec3 increment = sampleStep * ray.direction;
@@ -305,14 +295,14 @@ glm::vec4 Renderer::traceRayComposite(const Ray& ray, float sampleStep) const
         if (ai_prime > 0.95) {
             break;
         }
-        val += m_pVolume->getSampleInterpolate(samplePos);
-        glm::vec4 colorVector = getTFValue(val);
+        val = m_pVolume->getSampleInterpolate(samplePos);
+        glm::vec4 colorVector = getTFValue(val); 
+        // Create new vector associative
 
-        const glm::vec3 current_color(colorVector[0] * ai_prime, colorVector[1] * ai_prime, colorVector[2] * ai_prime);
-        ci_prime = ci_prime + (current_color[0] * (1 - ai_prime), current_color[1] * (1 - ai_prime), current_color[2] * (1 - ai_prime));
+        const glm::vec3 current_color(colorVector[0] * colorVector[3], colorVector[1] * colorVector[3], colorVector[2] * colorVector[3]);
+        ci_prime = ci_prime + (current_color[0] * (1 - ai_prime), current_color[1] * (1 - ai_prime), current_color[2] * (1 - ai_prime)); // Look at this one
         ai_prime = ai_prime + (1 - ai_prime) * colorVector[3];
         result = glm::vec4(ci_prime, ai_prime);
-        old_c_prime = ci_prime;
     }
 
     return result;
