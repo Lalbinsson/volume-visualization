@@ -122,9 +122,17 @@ float Volume::getSampleNearestNeighbourInterpolation(const glm::vec3& coord) con
 float Volume::getSampleTriLinearInterpolation(const glm::vec3& coord) const
 {
     // check if the coordinate is within volume boundaries
+<<<<<<< HEAD
     if (glm::any(glm::lessThan(coord, glm::vec3(0))) || glm::any(glm::greaterThanEqual(coord, glm::vec3(m_dim))))
         return 0.0f;
 
+=======
+    if (glm::any(glm::lessThan(floor(coord), glm::vec3(0))) || glm::any(glm::greaterThanEqual(ceil(coord), glm::vec3(m_dim))))
+        return 0.0f;
+
+
+
+>>>>>>> phong_shading
     glm::vec2 q(coord.x, coord.y);
     float r1 = biLinearInterpolate(q, floor(coord.z)); // BiLinearInterpolate
     float r2 = biLinearInterpolate(q, ceil(coord.z));
@@ -165,6 +173,7 @@ float Volume::biLinearInterpolate(const glm::vec2& xyCoord, int z) const
     float r2 = linearInterpolate(r0, r1, factor1);
 
     return r2;
+<<<<<<< HEAD
 
     /*
     float factor = xyCoord.x / 128; // Factor should be the position of the coord in 1D. 
@@ -182,6 +191,8 @@ float Volume::biLinearInterpolate(const glm::vec2& xyCoord, int z) const
     float r3 = linearInterpolate(r1, r2, factor);
     return r3;
     */
+=======
+>>>>>>> phong_shading
 }
 
 

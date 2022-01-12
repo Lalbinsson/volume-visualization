@@ -115,7 +115,40 @@ GradientVoxel GradientVolume::getGradientNearestNeighbor(const glm::vec3& coord)
 // Use the linearInterpolate function that you implemented below.
 GradientVoxel GradientVolume::getGradientLinearInterpolate(const glm::vec3& coord) const
 {
-    return GradientVoxel {};
+    glm::vec2 q(coord.x, coord.y);
+
+    auto biLinearInterpolate = [&](const glm::vec2& coord, int z)
+    {
+        // Bilinear
+        float x = coord.x;
+        float y = coord.y;
+        float x0 = (floor(coord.x));
+        float x1 = ceil(coord.x);
+
+        float factor0 = x - x0;
+        GradientVoxel g0 = getGradient(x0, floor(coord.y), z);
+        GradientVoxel g1 = getGradient(x1, floor(coord.y), z);
+
+        GradientVoxel g2 = getGradient(x0, ceil(coord.y), z);
+        GradientVoxel g3 = getGradient(x1, ceil(coord.y), z);
+
+        GradientVoxel r0 = linearInterpolate(g0, g1, factor0);
+        GradientVoxel r1 = linearInterpolate(g2, g3, factor0);
+
+        float y0 = floor(coord.y);
+        float factor1 = y - y0;
+
+        GradientVoxel r2 = linearInterpolate(r0, r1, factor1);
+
+        return r2;
+    };
+
+    GradientVoxel r1 = biLinearInterpolate(q, floor(coord.z));
+    GradientVoxel r2 = biLinearInterpolate(q, ceil(coord.z));
+    float factor = coord.z - floor(coord.z);
+    GradientVoxel r3 = linearInterpolate(r1, r2, factor);
+
+    return r3;
 }
 
 // ======= TODO : IMPLEMENT ========
@@ -123,7 +156,9 @@ GradientVoxel GradientVolume::getGradientLinearInterpolate(const glm::vec3& coor
 // At t=0, linearInterpolate should return g0 and at t=1 it returns g1.
 GradientVoxel GradientVolume::linearInterpolate(const GradientVoxel& g0, const GradientVoxel& g1, float factor)
 {
-    return GradientVoxel {};
+    glm::vec3 dir = g0.dir + factor * (g1.dir - g0.dir);
+    float magnitude = g0.magnitude + factor * (g1.magnitude - g0.magnitude);
+    return GradientVoxel {dir, magnitude};
 }
 
 // This function returns a gradientVoxel without using interpolation

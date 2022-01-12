@@ -9,6 +9,9 @@
 #include <tbb/blocked_range2d.h>
 #include <tbb/parallel_for.h>
 #include <tuple>
+#include <iostream>
+#include <glm/glm.hpp>
+#include <glm/gtx/io.hpp>
 
 namespace render {
 
@@ -102,6 +105,7 @@ void Renderer::render()
             glm::vec4 color {};
             switch (m_config.renderMode) {
             case RenderMode::RenderSlicer: {
+             //   std::cout << "testing render slice" << std::endl;
                 color = traceRaySlice(ray, volumeCenter, planeNormal);
                 break;
             }
@@ -175,8 +179,38 @@ glm::vec4 Renderer::traceRayMIP(const Ray& ray, float sampleStep) const
 // Use the bisectionAccuracy function (to be implemented) to get a more precise isosurface location between two steps.
 glm::vec4 Renderer::traceRayISO(const Ray& ray, float sampleStep) const
 {
+
+ //   static constexpr glm::vec3 isoColor { 0.8f, 0.8f, 0.2f };
+ //   return glm::vec4(isoColor, 1.0f);
+
+    float isoVal = m_config.isoValue;
     static constexpr glm::vec3 isoColor { 0.8f, 0.8f, 0.2f };
-    return glm::vec4(isoColor, 1.0f);
+    glm::vec3 samplePos = ray.origin + ray.tmin * ray.direction;
+    const glm::vec3 increment = sampleStep * ray.direction;
+    float val = 0.0f;
+    glm::vec4 result { 0.0f, 0.0f, 0.0f, 0.0f };
+    float shading = m_config.volumeShading;
+ 
+    for (float t = ray.tmin; t <= ray.tmax; t += sampleStep, samplePos += increment) {
+        val = m_pVolume->getSampleInterpolate(samplePos);
+        if (val > isoVal) {
+            float tBisect = bisectionAccuracy(ray, t-sampleStep, t, isoVal);
+            samplePos = ray.origin + tBisect * ray.direction;
+            if (shading==0){
+                return glm::vec4(isoColor, 1.0f);
+            } else if (shading==1){
+                volume::GradientVoxel grad = m_pGradientVolume->getGradientInterpolate(glm::vec3 { samplePos[0], samplePos[1], samplePos[2] });
+                glm::vec3 lightVector { samplePos - m_pCamera->position() };
+                lightVector = glm::normalize(lightVector);
+                const glm::vec3 shade = computePhongShading(isoColor, grad, lightVector, -lightVector);
+                //std::cout << shade << std::endl;
+                return glm::vec4(shade, 1.0f);
+            }
+        }
+    }
+    return glm::vec4(0);
+    
+    
 }
 
 // ======= TODO: IMPLEMENT ========
@@ -185,7 +219,25 @@ glm::vec4 Renderer::traceRayISO(const Ray& ray, float sampleStep) const
 // iterations such that it does not get stuck in degerate cases.
 float Renderer::bisectionAccuracy(const Ray& ray, float t0, float t1, float isoValue) const
 {
-    return 0.0f;
+    float tmid = t0+((t1-t0)/2); 
+    glm::vec3 samplePos = ray.origin + tmid * ray.direction; //samplePos mitten av t0 och t1
+    float val = m_pVolume->getSampleInterpolate(samplePos); //val vid punkten mitt emellan t0 och t1
+    const int maxIter = 50;
+    int iter = 0;
+
+    while ((abs(isoValue-val) > 0.01) && (iter < maxIter)) { //om värdet vid tmid fortfarande är större, med 0.01 differens
+        tmid = t0+((t1-t0)/2); //tmid är mitt emellan t0 och tmid (halveras varje iteration)
+        glm::vec3 newSamplePos = ray.origin + tmid * ray.direction;
+        val = m_pVolume->getSampleInterpolate(newSamplePos); 
+        if (val < isoValue) { //beroende på om val är större eller mindre så flyttas t0 och t1 närmare eller längre ifrån upper bound t1
+            t0 = tmid;
+        } else if(val >= isoValue) {
+            t1 = tmid;
+        }
+        iter = iter+1;
+    }
+
+    return tmid;
 }
 
 // ======= TODO: IMPLEMENT ========
@@ -197,7 +249,33 @@ float Renderer::bisectionAccuracy(const Ray& ray, float t0, float t1, float isoV
 // You are free to choose any specular power that you'd like.
 glm::vec3 Renderer::computePhongShading(const glm::vec3& color, const volume::GradientVoxel& gradient, const glm::vec3& L, const glm::vec3& V)
 {
-    return glm::vec3(0.0f);
+
+    //phong weights
+    float ka = 0.1;
+    float kd = 0.7; 
+    float ks = 0.2; 
+    int inf = 100;
+    int alpha = 1;
+
+    const glm::vec3 normalized_inverse_light = glm::normalize(-L);
+    const glm::vec3 normalized_light = glm::normalize(L);
+    const glm::vec3 normalized_surf = glm::normalize(gradient.dir);
+    const glm::vec3 reflected_light = 2 * glm::dot(L, normalized_surf) * normalized_surf - normalized_light;
+    const glm::vec3 normalized_reflected_light = glm::normalize(reflected_light);
+    const glm::vec3 normalized_view = glm::normalize(-V);
+
+    float theta = glm::dot(normalized_light, normalized_surf);
+    float fi = glm::dot(normalized_reflected_light, normalized_view);
+
+    const glm::vec3 ambient = ka * glm::vec3 ( 1.0f * color[0], 1.0f * color[1], 1.0f * color[2] );
+    const glm::vec3 diffuse = kd * glm::vec3(1.0f * color[0], 1.0f * color[1], 1.0f * color[2]) * theta;
+    const glm::vec3 specular = ks * glm::vec3(1.0f * color[0],  1.0f * color[1],  1.0f * color[2]) * powf(fi, inf); // * gradient^alpha; //kvadrat
+
+    //std::cout << "HEJ" << std::endl;
+    //std::cout << ambient << std::endl;
+    
+    //ambient+diffuse+speculat
+    return ambient + diffuse + specular;
 }
 
 // ======= TODO: IMPLEMENT ========
@@ -205,7 +283,29 @@ glm::vec3 Renderer::computePhongShading(const glm::vec3& color, const volume::Gr
 // Use getTFValue to compute the color for a given volume value according to the 1D transfer function.
 glm::vec4 Renderer::traceRayComposite(const Ray& ray, float sampleStep) const
 {
-    return glm::vec4(0.0f);
+    glm::vec4 result(0.0f);
+    float val = 0.0f;
+    glm::vec3 ci_prime(0.0f);
+    float ai_prime = 0.0f;
+    
+    // Incrementing samplePos directly instead of recomputing it each frame gives a measureable speed-up.
+    glm::vec3 samplePos = ray.origin + ray.tmin * ray.direction;
+    const glm::vec3 increment = sampleStep * ray.direction;
+    for (float t = ray.tmin; t <= ray.tmax; t += sampleStep, samplePos += increment) {
+        if (ai_prime > 0.95) {
+            break;
+        }
+        val = m_pVolume->getSampleInterpolate(samplePos);
+        glm::vec4 colorVector = getTFValue(val); 
+        // Create new vector associative
+
+        const glm::vec3 current_color(colorVector[0] * colorVector[3], colorVector[1] * colorVector[3], colorVector[2] * colorVector[3]);
+        ci_prime = ci_prime + (current_color[0] * (1 - ai_prime), current_color[1] * (1 - ai_prime), current_color[2] * (1 - ai_prime)); // Look at this one
+        ai_prime = ai_prime + (1 - ai_prime) * colorVector[3];
+        result = glm::vec4(ci_prime, ai_prime);
+    }
+
+    return result;
 }
 
 // ======= DO NOT MODIFY THIS FUNCTION ========
