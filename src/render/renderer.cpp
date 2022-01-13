@@ -300,7 +300,7 @@ glm::vec4 Renderer::traceRayComposite(const Ray& ray, float sampleStep) const
         // Create new vector associative
 
         const glm::vec3 current_color(colorVector[0] * colorVector[3], colorVector[1] * colorVector[3], colorVector[2] * colorVector[3]);
-        ci_prime = ci_prime + (current_color[0] * (1 - ai_prime), current_color[1] * (1 - ai_prime), current_color[2] * (1 - ai_prime)); // Look at this one
+        ci_prime = ci_prime + glm::vec3 (current_color[0] * (1 - ai_prime), current_color[1] * (1 - ai_prime), current_color[2] * (1 - ai_prime)); // Look at this one
         ai_prime = ai_prime + (1 - ai_prime) * colorVector[3];
         result = glm::vec4(ci_prime, ai_prime);
     }

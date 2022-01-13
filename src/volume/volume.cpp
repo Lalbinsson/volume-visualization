@@ -122,17 +122,11 @@ float Volume::getSampleNearestNeighbourInterpolation(const glm::vec3& coord) con
 float Volume::getSampleTriLinearInterpolation(const glm::vec3& coord) const
 {
     // check if the coordinate is within volume boundaries
-<<<<<<< HEAD
-    if (glm::any(glm::lessThan(coord, glm::vec3(0))) || glm::any(glm::greaterThanEqual(coord, glm::vec3(m_dim))))
-        return 0.0f;
-
-=======
     if (glm::any(glm::lessThan(floor(coord), glm::vec3(0))) || glm::any(glm::greaterThanEqual(ceil(coord), glm::vec3(m_dim))))
         return 0.0f;
 
 
 
->>>>>>> phong_shading
     glm::vec2 q(coord.x, coord.y);
     float r1 = biLinearInterpolate(q, floor(coord.z)); // BiLinearInterpolate
     float r2 = biLinearInterpolate(q, ceil(coord.z));
@@ -173,26 +167,6 @@ float Volume::biLinearInterpolate(const glm::vec2& xyCoord, int z) const
     float r2 = linearInterpolate(r0, r1, factor1);
 
     return r2;
-<<<<<<< HEAD
-
-    /*
-    float factor = xyCoord.x / 128; // Factor should be the position of the coord in 1D. 
-                                    //Since the distance between neighbouring voxels is 1 in all directions, dividing by 1 we should get the factor
-    float x2 = (ceil(xyCoord.x));
-    float x = (xyCoord.x);
-    float x1 = (floor(xyCoord.x));
-
-    float q00 = getVoxel(x1, xyCoord.y, z);
-    float q01 = getVoxel(x2, xyCoord.y, z);
-    float r1 = linearInterpolate(q00, q01, factor);
-    float q10 = getVoxel(x, ceil(xyCoord.y), z);
-    float q11 = getVoxel(x2, ceil(xyCoord.y), z);
-    float r2 = linearInterpolate(q10, q11, factor);
-    float r3 = linearInterpolate(r1, r2, factor);
-    return r3;
-    */
-=======
->>>>>>> phong_shading
 }
 
 
