@@ -283,6 +283,7 @@ glm::vec3 Renderer::computePhongShading(const glm::vec3& color, const volume::Gr
 // Use getTFValue to compute the color for a given volume value according to the 1D transfer function.
 glm::vec4 Renderer::traceRayComposite(const Ray& ray, float sampleStep) const
 {
+    float shading = m_config.volumeShading;
     glm::vec4 result(0.0f);
     float val = 0.0f;
     glm::vec3 ci_prime(0.0f);
@@ -296,8 +297,15 @@ glm::vec4 Renderer::traceRayComposite(const Ray& ray, float sampleStep) const
             break;
         }
         val = m_pVolume->getSampleInterpolate(samplePos);
-        glm::vec4 colorVector = getTFValue(val); 
-        // Create new vector associative
+        glm::vec4 colorVector = getTFValue(val);
+
+        if (shading==1) {
+            volume::GradientVoxel grad = m_pGradientVolume->getGradientInterpolate(glm::vec3 { samplePos[0], samplePos[1], samplePos[2] });
+            glm::vec3 lightVector { samplePos - m_pCamera->position() };
+            lightVector = glm::normalize(lightVector);
+            const glm::vec3 shade = computePhongShading(glm::vec3(colorVector[0], colorVector[1], colorVector[2]), grad, lightVector, -lightVector);
+            colorVector = glm::vec4(shade, colorVector[3]);
+        }
 
         const glm::vec3 current_color(colorVector[0] * colorVector[3], colorVector[1] * colorVector[3], colorVector[2] * colorVector[3]);
         ci_prime = ci_prime + glm::vec3 (current_color[0] * (1 - ai_prime), current_color[1] * (1 - ai_prime), current_color[2] * (1 - ai_prime)); // Look at this one
