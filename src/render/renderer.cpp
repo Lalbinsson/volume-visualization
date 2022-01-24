@@ -271,6 +271,10 @@ glm::vec3 Renderer::computePhongShading(const glm::vec3& color, const volume::Gr
     const glm::vec3 diffuse = kd * glm::vec3(1.0f * color[0], 1.0f * color[1], 1.0f * color[2]) * theta;
     const glm::vec3 specular = ks * glm::vec3(1.0f * color[0],  1.0f * color[1],  1.0f * color[2]) * powf(fi, inf); // * gradient^alpha; //kvadrat
 
+    if (gradient.magnitude == 0) {
+        return ambient;
+    }
+
     //std::cout << "HEJ" << std::endl;
     //std::cout << ambient << std::endl;
     
@@ -299,11 +303,11 @@ glm::vec4 Renderer::traceRayComposite(const Ray& ray, float sampleStep) const
         val = m_pVolume->getSampleInterpolate(samplePos);
         glm::vec4 colorVector = getTFValue(val);
 
-        if (shading==1) {
+     if (shading == 1) {
             volume::GradientVoxel grad = m_pGradientVolume->getGradientInterpolate(glm::vec3 { samplePos[0], samplePos[1], samplePos[2] });
             glm::vec3 lightVector { samplePos - m_pCamera->position() };
             lightVector = glm::normalize(lightVector);
-            const glm::vec3 shade = computePhongShading(glm::vec3(colorVector[0], colorVector[1], colorVector[2]), grad, lightVector, -lightVector);
+            const glm::vec3 shade = computePhongShading(colorVector, grad, lightVector, -lightVector);
             colorVector = glm::vec4(shade, colorVector[3]);
         }
 
