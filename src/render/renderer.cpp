@@ -303,13 +303,13 @@ glm::vec4 Renderer::traceRayComposite(const Ray& ray, float sampleStep) const
         val = m_pVolume->getSampleInterpolate(samplePos);
         glm::vec4 colorVector = getTFValue(val);
 
-     if (shading == 1) {
-            volume::GradientVoxel grad = m_pGradientVolume->getGradientInterpolate(glm::vec3 { samplePos[0], samplePos[1], samplePos[2] });
-            glm::vec3 lightVector { samplePos - m_pCamera->position() };
-            lightVector = glm::normalize(lightVector);
-            const glm::vec3 shade = computePhongShading(colorVector, grad, lightVector, -lightVector);
-            colorVector = glm::vec4(shade, colorVector[3]);
-        }
+        if (shading == 1) {
+                volume::GradientVoxel grad = m_pGradientVolume->getGradientInterpolate(glm::vec3 { samplePos[0], samplePos[1], samplePos[2] });
+                glm::vec3 lightVector { samplePos - m_pCamera->position() };
+                lightVector = glm::normalize(lightVector);
+                const glm::vec3 shade = computePhongShading(colorVector, grad, lightVector, -lightVector);
+                colorVector = glm::vec4(shade, colorVector[3]);
+            }
 
         const glm::vec3 current_color(colorVector[0] * colorVector[3], colorVector[1] * colorVector[3], colorVector[2] * colorVector[3]);
         ci_prime = ci_prime + glm::vec3 (current_color[0] * (1 - ai_prime), current_color[1] * (1 - ai_prime), current_color[2] * (1 - ai_prime)); // Look at this one
@@ -335,20 +335,70 @@ glm::vec4 Renderer::getTFValue(float val) const
 // In this function, implement 2D transfer function raycasting.
 // Use the getTF2DOpacity function that you implemented to compute the opacity according to the 2D transfer function.
 glm::vec4 Renderer::traceRayTF2D(const Ray& ray, float sampleStep) const
-{
-    return glm::vec4(0.0f);
+{   
+    glm::vec4 result(0.0f);
+    float val = 0.0f;
+    glm::vec3 ci_prime(0.0f);
+    float ai_prime = 0.0f;
+    glm::vec4 colorVector = m_config.TF2DColor;
+    
+    // Incrementing samplePos directly instead of recomputing it each frame gives a measureable speed-up.
+    glm::vec3 samplePos = ray.origin + ray.tmin * ray.direction;
+    const glm::vec3 increment = sampleStep * ray.direction;
+    for (float t = ray.tmin; t <= ray.tmax; t += sampleStep, samplePos += increment) {
+        if (ai_prime > 0.95) {
+            break;
+        }
+
+        val = m_pVolume->getSampleInterpolate(samplePos);
+        volume::GradientVoxel grad = m_pGradientVolume->getGradientInterpolate(glm::vec3 { samplePos[0], samplePos[1], samplePos[2] });
+        float mag = grad.magnitude;
+
+        float opacity = getTF2DOpacity(val, mag); 
+        colorVector[3] = opacity;
+
+        const glm::vec3 current_color(colorVector[0] * colorVector[3], colorVector[1] * colorVector[3], colorVector[2] * colorVector[3]);
+
+        ci_prime = ci_prime + glm::vec3 (current_color[0] * (1 - ai_prime), current_color[1] * (1 - ai_prime), current_color[2] * (1 - ai_prime)); // Look at this one
+        ai_prime = ai_prime + (1 - ai_prime) * colorVector[3];
+        result = glm::vec4(ci_prime, ai_prime);
+    }
+
+    return result;
 }
 
 // ======= TODO: IMPLEMENT ========
 // This function should return an opacity value for the given intensity and gradient according to the 2D transfer function.
 // Calculate whether the values are within the radius/intensity triangle defined in the 2D transfer function widget.
 // If so: return a tent weighting as described in the assignment
-// Otherwise: return 0.0f
+// Otherwise: return 0.0f// final_color
 //
 // The 2D transfer function settings can be accessed through m_config.TF2DIntensity and m_config.TF2DRadius.
-float Renderer::getTF2DOpacity(float intensity, float gradientMagnitude) const
-{
-    return 0.0f;
+float Renderer::getTF2DOpacity(float intensity, float gradientMagnitude) const 
+{   
+    float tf_radius = m_config.TF2DRadius/2;
+    float tf_intensity = m_config.TF2DIntensity;
+
+    if ((intensity >= (tf_intensity-tf_radius)) && (intensity <= tf_radius)) {
+         if (intensity >= (-intensity/tf_radius + tf_intensity/tf_radius)) {
+            glm::vec4 final_color = m_config.TF2DColor;
+            float opacity = final_color[3];
+            float interpolated_opacity = (tf_intensity-intensity)/tf_radius * opacity;
+            return interpolated_opacity;
+            }
+        }
+    else if ((intensity >= tf_intensity) && (intensity <= (tf_intensity + tf_radius))) {
+         if (intensity >= (intensity/tf_radius - tf_intensity/tf_radius)) {
+            glm::vec4 final_color = m_config.TF2DColor;
+            float opacity = final_color[3];
+            float interpolated_opacity = (intensity-tf_intensity)/tf_radius * opacity;
+            return interpolated_opacity;
+            }
+        }
+
+    
+    else 
+        return 0.0f;
 }
 
 // This function computes if a ray intersects with the axis-aligned bounding box around the volume.
