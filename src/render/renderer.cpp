@@ -303,18 +303,18 @@ glm::vec4 Renderer::traceRayComposite(const Ray& ray, float sampleStep) const
         val = m_pVolume->getSampleInterpolate(samplePos);
         glm::vec4 colorVector = getTFValue(val);
 
-     if (shading == 1) {
+        const glm::vec3 current_color(colorVector[0] * colorVector[3], colorVector[1] * colorVector[3], colorVector[2] * colorVector[3]);
+        ci_prime = ci_prime + glm::vec3 (current_color[0] * (1 - ai_prime), current_color[1] * (1 - ai_prime), current_color[2] * (1 - ai_prime)); // Look at this one
+        ai_prime = ai_prime + (1 - ai_prime) * colorVector[3];
+        result = glm::vec4(ci_prime, ai_prime);
+
+        if (shading == 1) {
             volume::GradientVoxel grad = m_pGradientVolume->getGradientInterpolate(glm::vec3 { samplePos[0], samplePos[1], samplePos[2] });
             glm::vec3 lightVector { samplePos - m_pCamera->position() };
             lightVector = glm::normalize(lightVector);
             const glm::vec3 shade = computePhongShading(colorVector, grad, lightVector, -lightVector);
             colorVector = glm::vec4(shade, colorVector[3]);
         }
-
-        const glm::vec3 current_color(colorVector[0] * colorVector[3], colorVector[1] * colorVector[3], colorVector[2] * colorVector[3]);
-        ci_prime = ci_prime + glm::vec3 (current_color[0] * (1 - ai_prime), current_color[1] * (1 - ai_prime), current_color[2] * (1 - ai_prime)); // Look at this one
-        ai_prime = ai_prime + (1 - ai_prime) * colorVector[3];
-        result = glm::vec4(ci_prime, ai_prime);
     }
 
     return result;
